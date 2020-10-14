@@ -1,25 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useEffect, useRef, useState} from 'react';
+
+const WrapDiv=({children})=>{
+const [drag,setdrag]=useState(false);
+const [styleEl,setstyleEl]=useState({
+  trasition:'0.1s',
+  transform:'translate(-50%,-50%)',
+  pointerEvents:'none',
+  marginTop:'0px',
+  marginLeft:'0px',
+  
+  
+});
+
+ 
+useEffect(()=>{
+  if(drag === true){
+    document.addEventListener('mousemove',(e)=>{
+      let x= e.clientX;
+    let y=e.clientY;
+      if(drag===false && movingbutton.current!==null){
+        movingbutton.current.style={marginLeft:x+"px",marginTop:y+"px"}
+      }else{
+        setstyleEl({...styleEl,marginLeft:x+"px",marginTop:y+"px"});
+      }
+        
+      
+    })
+  }
+},[drag]);
+      
+   
+const movingbutton=useRef(null);
+      // document.onmousedown=()=>{  
+      //     setdrag(true);
+      // }
+      document.onclick=()=>{
+        console.log(drag);
+        setdrag(!drag);
+      }
+   
+
+return (drag ? children({},styleEl):children(movingbutton)) 
+}
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+
+       <WrapDiv id={'couserBox'} >
+      {
+        (reff,el)=>{
+        return( <button ref={reff}style={el}>{'click'}</button>)
+        }
+      }
+       </WrapDiv>
+
+        
+    </Fragment>
+    
   );
 }
 
