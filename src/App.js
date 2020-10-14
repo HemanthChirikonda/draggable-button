@@ -18,11 +18,9 @@ useEffect(()=>{
     document.addEventListener('mousemove',(e)=>{
       let x= e.clientX;
     let y=e.clientY;
-      if(drag===false && movingbutton.current!==null){
-        movingbutton.current.style={marginLeft:x+"px",marginTop:y+"px"}
-      }else{
+      
         setstyleEl({...styleEl,marginLeft:x+"px",marginTop:y+"px"});
-      }
+      
         
       
     })
@@ -40,7 +38,7 @@ const movingbutton=useRef(null);
       }
    
 
-return (drag ? children({},styleEl):children(movingbutton)) 
+return (drag ? children(movingbutton,styleEl):children(movingbutton)) 
 }
 
 
